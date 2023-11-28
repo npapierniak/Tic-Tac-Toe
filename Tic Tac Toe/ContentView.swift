@@ -45,17 +45,27 @@ struct ContentView: View {
         }
         .preferredColorScheme(.dark)
         .alert(isPresented: $gameOver){
-                Alert(title: Text (winMessage))
-            }
+            Alert(title: Text (winMessage))
+        }
         .onChange(of: moves) {
             newValue in checkForWinner()
         }
         .padding()
     }
     private func checkForWinner() {
-        if moves [0] != "" && moves [0] == moves [1] && moves [1] == moves [2] {
-            winMessage = "\(moves[0]) is the winner!"
-            gameOver = true
+        checkLine(a: 0, b: 1, c: 2) // top row
+        checkLine(a: 3, b: 4, c: 5) //Middle
+        checkLine(a: 6, b: 7, c: 8)//Bottom
+        checkLine(a: 0, b: 3, c: 6) //Collum 1
+        checkLine(a: 1, b: 4, c: 7) // collum 2
+        checkLine(a: 2, b: 5, c: 8) //collum 3
+        checkLine(a: 0, b: 4, c: 8)
+        checkLine(a: 2, b: 4, c: 6)
+    }
+    private func checkLine(a: Int, b: Int, c: Int) {
+        if moves [a] != "" && moves [a] == moves [b] && moves [b] == moves [c] {
+        winMessage = "\(moves [a]) is the winner!"
+        gameOver = true
         }
     }
 }
